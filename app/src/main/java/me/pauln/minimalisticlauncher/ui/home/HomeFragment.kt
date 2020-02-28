@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,29 @@ class HomeFragment : DaggerFragment() {
         viewModel.currentDate.observe(this, Observer { date ->
             dateTv.text = date
         })
+//todo refactor code
+        phoneIv.setOnClickListener { _ ->
+            try {
+                val pm = context?.packageManager ?: return@setOnClickListener
+                val intent = Intent(Intent.ACTION_DIAL)
+                val componentName = intent.resolveActivity(pm)
+                if (componentName == null) startActivity(intent) else
+                    pm.getLaunchIntentForPackage(componentName.packageName)?.let {
+                        startActivity(it)
+                    } ?: run { startActivity(intent) }
+            } catch (e: Exception) {
+                // Do nothing
+            }
+        }
+
+        cameraIv.setOnClickListener {
+            try {
+                val intent = Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA)
+                startActivity(intent)
+            } catch (e: Exception) {
+                // Do nothing
+            }
+        }
     }
 
     override fun onResume() {
