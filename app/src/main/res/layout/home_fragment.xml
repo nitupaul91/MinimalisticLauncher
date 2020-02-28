@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="me.pauln.minimalisticlauncher.ui.home.HomeViewModel" />
+
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.HomeFragment">
+
+        <TextView
+            android:id="@+id/timeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="36sp"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            tools:text="23:24" />
+
+        <TextView
+            android:id="@+id/dateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/timeTv"
+            android:layout_centerHorizontal="true"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:textColor="@color/lightGrayThree"
+            tools:text="Fri, Feb 28" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/appListRv"
+            appList="@{viewModel.apps}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/dateTv" />
+
+    </RelativeLayout>
+</layout>
