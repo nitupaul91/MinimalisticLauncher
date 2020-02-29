@@ -61,28 +61,13 @@ class HomeFragment : DaggerFragment() {
         viewModel.currentDate.observe(this, Observer { date ->
             dateTv.text = date
         })
-//todo refactor code
-        phoneIv.setOnClickListener { _ ->
-            try {
-                val pm = context?.packageManager ?: return@setOnClickListener
-                val intent = Intent(Intent.ACTION_DIAL)
-                val componentName = intent.resolveActivity(pm)
-                if (componentName == null) startActivity(intent) else
-                    pm.getLaunchIntentForPackage(componentName.packageName)?.let {
-                        startActivity(it)
-                    } ?: run { startActivity(intent) }
-            } catch (e: Exception) {
-                // Do nothing
-            }
+
+        phoneIv.setOnClickListener {
+            navigateToPhone()
         }
 
         cameraIv.setOnClickListener {
-            try {
-                val intent = Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA)
-                startActivity(intent)
-            } catch (e: Exception) {
-                // Do nothing
-            }
+            navigateToCamera()
         }
     }
 
@@ -94,6 +79,29 @@ class HomeFragment : DaggerFragment() {
     override fun onStop() {
         super.onStop()
         activity?.unregisterReceiver(receiver)
+    }
+
+    private fun navigateToPhone() {
+        try {
+            val pm = context!!.packageManager
+            val intent = Intent(Intent.ACTION_DIAL)
+            val componentName = intent.resolveActivity(pm)
+            if (componentName == null) startActivity(intent) else
+                pm.getLaunchIntentForPackage(componentName.packageName)?.let {
+                    startActivity(it)
+                } ?: run { startActivity(intent) }
+        } catch (e: Exception) {
+            //todo do something
+        }
+    }
+
+    private fun navigateToCamera() {
+        try {
+            val intent = Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA)
+            startActivity(intent)
+        } catch (e: Exception) {
+            //todo do something
+        }
     }
 
     inner class ClockReceiver : BroadcastReceiver() {
