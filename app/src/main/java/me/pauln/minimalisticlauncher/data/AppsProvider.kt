@@ -1,12 +1,16 @@
 package me.pauln.minimalisticlauncher.data
 
+import android.content.Intent
 import android.content.Intent.CATEGORY_LAUNCHER
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import me.pauln.minimalisticlauncher.MinimalisticLauncherApp
 import me.pauln.minimalisticlauncher.data.model.App
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 class AppsProvider @Inject constructor(
@@ -42,7 +46,7 @@ class AppsProvider @Inject constructor(
                         val appLaunchIntent = packageManager.getLaunchIntentForPackage(appPackage)
                         appLaunchIntent?.addCategory(CATEGORY_LAUNCHER)
                         // add the application info to our collection
-                        apps.add(App(appPackage, appLabel.toString(), appIcon, appLaunchIntent))
+                        apps.add(App(appPackage, appLabel.toString(), appIcon, appLaunchIntent) )
                     } catch (nameNotFoundException: PackageManager.NameNotFoundException) {
                         Timber.w("Package '$appPackage' not found on device, skipping")
                     }

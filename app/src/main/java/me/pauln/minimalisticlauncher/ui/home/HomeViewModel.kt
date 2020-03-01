@@ -15,8 +15,9 @@ class HomeViewModel @Inject constructor(
     val apps = MutableLiveData<List<App>>()
     val currentTime = MutableLiveData<String>()
     val currentDate = MutableLiveData<String>()
+    val app = MutableLiveData<App>()
 
-    fun getContent(){
+    fun getContent() {
         getTwentyFourHoursClock()
         getInstalledApps()
     }
@@ -37,5 +38,9 @@ class HomeViewModel @Inject constructor(
 
     private fun getDate() {
         currentDate.value = clockRepository.getDate()
+    }
+
+    fun openApp(app: App) {
+        this.app.value = app
     }
 }

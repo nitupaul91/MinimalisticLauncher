@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import me.pauln.minimalisticlauncher.data.model.App
 import me.pauln.minimalisticlauncher.databinding.AppListItemBinding
 
-class HomeAppsAdapter  : RecyclerView.Adapter<HomeAppsAdapter.ViewHolder>() {
+class HomeAppsAdapter(
+    private val viewModel: HomeViewModel
+) : RecyclerView.Adapter<HomeAppsAdapter.ViewHolder>() {
 
     private var apps: List<App> = ArrayList()
 
@@ -32,10 +34,10 @@ class HomeAppsAdapter  : RecyclerView.Adapter<HomeAppsAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         fun bind(app: App) {
             val binding: AppListItemBinding = DataBindingUtil.getBinding(itemView)!!
             binding.app = app
+            binding.viewModel = viewModel
         }
     }
 }

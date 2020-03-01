@@ -6,6 +6,10 @@
         <variable
             name="app"
             type="me.pauln.minimalisticlauncher.data.model.App" />
+
+        <variable
+            name="viewModel"
+            type="me.pauln.minimalisticlauncher.ui.home.HomeViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,6 +22,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:contentDescription="@string/app_list_item_icon"
+            android:onClick="@{() -> viewModel.openApp(app)}"
             android:src="@{app.icon}" />
 
     </LinearLayout>
