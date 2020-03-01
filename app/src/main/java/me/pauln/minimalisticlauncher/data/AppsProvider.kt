@@ -1,6 +1,7 @@
 package me.pauln.minimalisticlauncher.data
 
 import android.content.Intent.CATEGORY_LAUNCHER
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import me.pauln.minimalisticlauncher.MinimalisticLauncherApp
 import me.pauln.minimalisticlauncher.data.model.App
@@ -19,16 +20,16 @@ class AppsProvider @Inject constructor(
         val packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
 
         for (packageInfo in packages) {
-           appPackages.add(packageInfo.packageName)
+
+            if (!isSystemPackage(packageInfo))
+                appPackages.add(packageInfo.packageName)
         }
 
         val apps = mutableListOf<App>()
         try {
             appPackages.apply {
                 distinctBy { it }.forEach { appPackage ->
-                    // de-duplicate
                     try {
-                        // extract the app meta data
                         val appInfo = packageManager.getApplicationInfo(
                             appPackage,
                             PackageManager.GET_META_DATA
@@ -56,5 +57,9 @@ class AppsProvider @Inject constructor(
 
         // return to caller
         return apps
+    }
+
+    private fun isSystemPackage(appInfo: ApplicationInfo): Boolean {
+        return appInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
     }
 }

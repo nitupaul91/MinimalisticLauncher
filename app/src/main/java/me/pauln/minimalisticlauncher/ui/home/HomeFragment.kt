@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.android.support.DaggerFragment
@@ -46,7 +47,7 @@ class HomeFragment : DaggerFragment() {
         binding.viewModel = viewModel
         binding.setLifecycleOwner { lifecycle }
         binding.appListRv.adapter = adapter
-        binding.appListRv.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.appListRv.layoutManager = GridLayoutManager(context,2)
 
         return view
     }
