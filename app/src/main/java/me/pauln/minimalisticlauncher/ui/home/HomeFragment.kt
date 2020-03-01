@@ -1,25 +1,24 @@
 package me.pauln.minimalisticlauncher.ui.home
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.provider.MediaStore
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.home_fragment.*
 import me.pauln.minimalisticlauncher.R
+import me.pauln.minimalisticlauncher.data.model.App
 import me.pauln.minimalisticlauncher.databinding.HomeFragmentBinding
 import me.pauln.minimalisticlauncher.di.ViewModelFactory
 import javax.inject.Inject
+
 
 class HomeFragment : DaggerFragment() {
 
@@ -42,12 +41,27 @@ class HomeFragment : DaggerFragment() {
 
         viewModel.getContent()
 
-        adapter = HomeAppsAdapter()
+        adapter = HomeAppsAdapter(viewModel)
         binding = HomeFragmentBinding.bind(view)
         binding.viewModel = viewModel
         binding.setLifecycleOwner { lifecycle }
         binding.appListRv.adapter = adapter
-        binding.appListRv.layoutManager = GridLayoutManager(context,2)
+        binding.appListRv.layoutManager = GridLayoutManager(context, 2)
+
+//todo find another solution to disable back button
+        view.setFocusableInTouchMode(true)
+        view.requestFocus()
+        view.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View, keyCode: Int, event: KeyEvent): Boolean {
+                if (event.getAction() === KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                        return true
+                    }
+                }
+                return false
+            }
+        })
 
         return view
     }
@@ -63,12 +77,24 @@ class HomeFragment : DaggerFragment() {
             dateTv.text = date
         })
 
+        viewModel.app.observe(this, Observer { app ->
+            openApp(app)
+        })
+
         phoneIv.setOnClickListener {
             navigateToPhone()
         }
 
         cameraIv.setOnClickListener {
             navigateToCamera()
+        }
+
+        dateTv.setOnClickListener {
+            navigateToCalendar()
+        }
+
+        timeTv.setOnClickListener {
+            navigateToAlarm()
         }
     }
 
@@ -82,6 +108,21 @@ class HomeFragment : DaggerFragment() {
         activity?.unregisterReceiver(receiver)
     }
 
+    private fun openApp(app: App) {
+        try {
+            val intent = Intent()
+            intent.action = Intent.ACTION_MAIN
+            intent.addCategory(Intent.CATEGORY_LAUNCHER)
+            intent.flags =
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+            intent.resolveActivity((activity ?: return).packageManager)?.let {
+                startActivity(app.launchIntent)
+            }
+        } catch (e: Exception) {
+            // Do no shit yet
+        }
+    }
+
     private fun navigateToPhone() {
         try {
             val pm = context!!.packageManager
@@ -93,6 +134,32 @@ class HomeFragment : DaggerFragment() {
                 } ?: run { startActivity(intent) }
         } catch (e: Exception) {
             //todo do something
+        }
+    }
+
+    private fun navigateToAlarm() {
+        try {
+            val pm = context!!.packageManager
+            val intent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            val componentName = intent.resolveActivity(pm)
+            if (componentName == null) startActivity(intent) else
+                pm.getLaunchIntentForPackage(componentName.packageName)?.let {
+                    startActivity(it)
+                }
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun navigateToCalendar() {
+        try {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_APP_CALENDAR)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+
         }
     }
 
