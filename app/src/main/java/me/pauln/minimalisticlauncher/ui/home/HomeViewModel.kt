@@ -19,7 +19,8 @@ class HomeViewModel @Inject constructor(
 
     fun getContent() {
         getTwentyFourHoursClock()
-        getInstalledApps()
+        // todo replace with customised apps
+//        getInstalledApps()
     }
 
     fun getTwentyFourHoursClock() {

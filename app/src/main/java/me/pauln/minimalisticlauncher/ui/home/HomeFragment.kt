@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -102,6 +103,10 @@ class HomeFragment : DaggerFragment() {
             val intent = Intent(Settings.ACTION_SETTINGS)
             startActivity(intent)
         }
+
+        customiseHome.setOnClickListener {
+            navigateToCustomiseApps(view)
+        }
     }
 
     override fun onResume() {
@@ -176,6 +181,11 @@ class HomeFragment : DaggerFragment() {
         } catch (e: Exception) {
             //todo do something
         }
+    }
+
+    private fun navigateToCustomiseApps(view: View) {
+        Navigation.findNavController(view)
+            .navigate(R.id.action_homeFragment_to_customiseAppsFragment)
     }
 
     inner class ClockReceiver : BroadcastReceiver() {
