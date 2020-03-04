@@ -4,5 +4,6 @@
     <string name="settings">Phone Settings</string>
     <string name="change_theme">Change Theme</string>
     <string name="customise_home">Customise Home Apps</string>
+    <string name="add_apps_description">You can add 6 apps to your home:</string>
 
 </resources>

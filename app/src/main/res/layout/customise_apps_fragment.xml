@@ -12,12 +12,23 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".ui.customiseapps.CustomiseAppsFragment">
+
+        <TextView
+            android:id="@+id/addAppsDescriptionTv"
+            android:text="@string/add_apps_description"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="@color/lightGrayThree"
+            android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/customiseAppsRv"
+            android:layout_marginTop="16dp"
             customiseAppList="@{viewModel.apps}"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

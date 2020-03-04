@@ -46,7 +46,7 @@ class AppsProvider @Inject constructor(
                         val appLaunchIntent = packageManager.getLaunchIntentForPackage(appPackage)
                         appLaunchIntent?.addCategory(CATEGORY_LAUNCHER)
                         // add the application info to our collection
-                        apps.add(App(appPackage, appLabel.toString(), appIcon, appLaunchIntent) )
+                        apps.add(App(appPackage, appLabel.toString(), appIcon, appLaunchIntent, false) )
                     } catch (nameNotFoundException: PackageManager.NameNotFoundException) {
                         Timber.w("Package '$appPackage' not found on device, skipping")
                     }

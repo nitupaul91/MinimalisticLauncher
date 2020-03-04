@@ -9,7 +9,9 @@ import me.pauln.minimalisticlauncher.data.model.App
 import me.pauln.minimalisticlauncher.databinding.CustomiseAppListItemBinding
 
 class CustomiseAppsAdapter(
-    private val viewModel: CustomiseAppsViewModel
+    private val viewModel: CustomiseAppsViewModel,
+    private val appClickListener: OnAppClickListener
+
 ) : RecyclerView.Adapter<CustomiseAppsAdapter.ViewHolder>() {
 
     private var apps: List<App> = ArrayList()
@@ -26,7 +28,7 @@ class CustomiseAppsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(apps[position])
+        holder.bind(apps[position], appClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -34,10 +36,24 @@ class CustomiseAppsAdapter(
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(app: App) {
+        fun bind(app: App, appClickListener: OnAppClickListener) {
             val binding: CustomiseAppListItemBinding = DataBindingUtil.getBinding(itemView)!!
             binding.app = app
             binding.viewModel = viewModel
+            itemView.setOnClickListener {
+                if (!app.isSelected){
+                    binding.checkMarkIv.visibility = View.VISIBLE
+                    app.isSelected = true
+                    appClickListener.onAppClicked(app)
+                } else {
+                    app.isSelected = false
+                    binding.checkMarkIv.visibility = View.INVISIBLE
+                }
+            }
         }
+    }
+
+    interface OnAppClickListener {
+        fun onAppClicked(app: App)
     }
 }

@@ -7,5 +7,6 @@ data class App(
     val appPackage: String,
     val name: String,
     val icon: Drawable,
-    val launchIntent: Intent?
+    val launchIntent: Intent?,
+    var isSelected: Boolean
 )

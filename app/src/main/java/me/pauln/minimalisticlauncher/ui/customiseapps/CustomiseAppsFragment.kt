@@ -1,23 +1,19 @@
 package me.pauln.minimalisticlauncher.ui.customiseapps
 
-import android.content.BroadcastReceiver
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.android.support.DaggerFragment
 import me.pauln.minimalisticlauncher.R
+import me.pauln.minimalisticlauncher.data.model.App
 import me.pauln.minimalisticlauncher.databinding.CustomiseAppsFragmentBinding
-import me.pauln.minimalisticlauncher.databinding.HomeFragmentBinding
 import me.pauln.minimalisticlauncher.di.ViewModelFactory
-import me.pauln.minimalisticlauncher.ui.home.HomeAppsAdapter
-import me.pauln.minimalisticlauncher.ui.home.HomeViewModel
 import javax.inject.Inject
 
-class CustomiseAppsFragment : DaggerFragment() {
+class CustomiseAppsFragment : DaggerFragment(), CustomiseAppsAdapter.OnAppClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory<CustomiseAppsViewModel>
@@ -32,9 +28,10 @@ class CustomiseAppsFragment : DaggerFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.customise_apps_fragment, container, false)
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CustomiseAppsViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, viewModelFactory).get(CustomiseAppsViewModel::class.java)
 
-        adapter = CustomiseAppsAdapter(viewModel)
+        adapter = CustomiseAppsAdapter(viewModel, this)
         binding = CustomiseAppsFragmentBinding.bind(view)
         binding.viewModel = viewModel
         binding.setLifecycleOwner { lifecycle }
@@ -42,5 +39,8 @@ class CustomiseAppsFragment : DaggerFragment() {
         binding.customiseAppsRv.layoutManager = GridLayoutManager(context, 4)
 
         return view
+    }
+
+    override fun onAppClicked(app: App) {
     }
 }
