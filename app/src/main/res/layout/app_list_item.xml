@@ -21,6 +21,7 @@
             android:id="@+id/appIconIv"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_margin="32dp"
             android:contentDescription="@string/app_list_item_icon"
             android:onClick="@{() -> viewModel.openApp(app)}"
             android:src="@{app.icon}" />

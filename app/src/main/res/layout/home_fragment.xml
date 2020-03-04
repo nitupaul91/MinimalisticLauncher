@@ -9,11 +9,13 @@
 
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/motionLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
+        app:layoutDescription="@xml/home_motion_scene">
 
         <TextView
             android:id="@+id/timeTv"
@@ -23,7 +25,50 @@
             android:layout_marginTop="40dp"
             android:gravity="center"
             android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="23:24" />
+
+        <TextView
+            android:id="@+id/phoneSettingsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_settings_black_24dp"
+            android:gravity="center"
+            android:text="@string/settings"
+            android:textColor="@color/lightGrayThree"
+            android:textSize="22sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Phone Settings" />
+
+        <TextView
+            android:id="@+id/changeThemeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/change_theme"
+            android:textColor="@color/lightGrayThree"
+            android:textSize="22sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneSettingsTv"
+            tools:text="Change Theme" />
+
+        <TextView
+            android:id="@+id/customiseHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/customise_home"
+            android:textColor="@color/lightGrayThree"
+            android:textSize="22sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/changeThemeTv"
+            tools:text="Customise Home" />
 
         <TextView
             android:id="@+id/dateTv"
@@ -34,24 +79,27 @@
             android:gravity="center"
             android:textColor="@color/lightGrayThree"
             android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeTv"
             tools:text="Fri, Feb 28" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/appListRv"
             appList="@{viewModel.apps}"
-            android:layout_width="match_parent"
-            android:layout_above="@+id/phoneIv"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/dateTv" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/phoneIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_phone_black_40dp" />
+            android:src="@drawable/ic_phone_black_40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/cameraIv"
@@ -61,8 +109,9 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_photo_camera_black_40dp" />
+            android:src="@drawable/ic_photo_camera_black_40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-
-    </RelativeLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
