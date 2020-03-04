@@ -3,6 +3,6 @@
     <string name="app_list_item_icon">App Icon</string>
     <string name="settings">Phone Settings</string>
     <string name="change_theme">Change Theme</string>
-    <string name="customise_home">Customise Home</string>
+    <string name="customise_home">Customise Home Apps</string>
 
 </resources>

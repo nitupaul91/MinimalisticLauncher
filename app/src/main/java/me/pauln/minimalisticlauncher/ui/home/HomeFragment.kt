@@ -4,6 +4,7 @@ import android.content.*
 import android.os.Bundle
 import android.provider.AlarmClock
 import android.provider.MediaStore
+import android.provider.Settings
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -95,6 +96,11 @@ class HomeFragment : DaggerFragment() {
 
         timeTv.setOnClickListener {
             navigateToAlarm()
+        }
+
+        phoneSettingsTv.setOnClickListener {
+            val intent = Intent(Settings.ACTION_SETTINGS)
+            startActivity(intent)
         }
     }
 
