@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="app"
+            type="me.pauln.minimalisticlauncher.data.model.App" />
+
+        <variable
+            name="viewModel"
+            type="me.pauln.minimalisticlauncher.ui.customiseapps.CustomiseAppsViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/appIconIv"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="32dp"
+            android:contentDescription="@string/app_list_item_icon"
+            android:src="@{app.icon}" />
+
+    </LinearLayout>
+</layout>
