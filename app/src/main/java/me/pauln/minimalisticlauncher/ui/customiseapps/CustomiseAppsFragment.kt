@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.customise_apps_fragment.*
 import me.pauln.minimalisticlauncher.R
 import me.pauln.minimalisticlauncher.data.model.App
 import me.pauln.minimalisticlauncher.databinding.CustomiseAppsFragmentBinding
@@ -41,7 +44,20 @@ class CustomiseAppsFragment : DaggerFragment(), CustomiseAppsAdapter.OnAppClickL
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        addBtn.setOnClickListener {
+            navigateToHome(view)
+        }
+    }
+
     override fun onAppClicked(app: App) {
         viewModel.onAppClicked(app)
+    }
+
+    fun navigateToHome(view: View) {
+        Navigation.findNavController(view)
+            .navigate(R.id.action_customiseAppsFragment_to_homeFragment)
     }
 }

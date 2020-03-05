@@ -12,7 +12,8 @@ class CustomiseAppsViewModel @Inject constructor(
 
     val apps = MutableLiveData<List<App>>()
     val isAddButtonVisible = MutableLiveData<Boolean>().apply { this.value = false }
-    val appList: MutableList<App> = ArrayList()
+
+    private val selectedAppList: MutableList<App> = ArrayList()
 
     init {
         getInstalledApps()
@@ -21,11 +22,11 @@ class CustomiseAppsViewModel @Inject constructor(
     fun onAppClicked(clickedApp: App) {
         if (clickedApp.isSelected) {
             showAddButton(true)
-            appList.add(clickedApp)
+            selectedAppList.add(clickedApp)
         } else {
-            appList.remove(clickedApp)
+            selectedAppList.remove(clickedApp)
         }
-        if (appList.isEmpty()) {
+        if (selectedAppList.isEmpty()) {
             showAddButton(false)
         }
     }
