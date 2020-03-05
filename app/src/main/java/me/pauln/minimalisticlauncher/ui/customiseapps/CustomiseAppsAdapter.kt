@@ -41,13 +41,14 @@ class CustomiseAppsAdapter(
             binding.app = app
             binding.viewModel = viewModel
             itemView.setOnClickListener {
-                if (!app.isSelected){
+                if (!app.isSelected) {
                     binding.checkMarkIv.visibility = View.VISIBLE
                     app.isSelected = true
                     appClickListener.onAppClicked(app)
-                } else {
-                    app.isSelected = false
+                } else if (app.isSelected) {
                     binding.checkMarkIv.visibility = View.INVISIBLE
+                    app.isSelected = false
+                    appClickListener.onAppClicked(app)
                 }
             }
         }

@@ -42,5 +42,6 @@ class CustomiseAppsFragment : DaggerFragment(), CustomiseAppsAdapter.OnAppClickL
     }
 
     override fun onAppClicked(app: App) {
+        viewModel.onAppClicked(app)
     }
 }
