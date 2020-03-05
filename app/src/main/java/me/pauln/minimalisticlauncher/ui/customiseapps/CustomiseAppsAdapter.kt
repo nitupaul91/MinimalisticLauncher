@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.customise_app_list_item.view.*
 import me.pauln.minimalisticlauncher.data.model.App
 import me.pauln.minimalisticlauncher.databinding.CustomiseAppListItemBinding
 
@@ -41,12 +42,12 @@ class CustomiseAppsAdapter(
             binding.app = app
             binding.viewModel = viewModel
             itemView.setOnClickListener {
-                if (!app.isSelected) {
-                    binding.checkMarkIv.visibility = View.VISIBLE
+                if (!app.isSelected){
+                    itemView.checkMarkIv.visibility = View.VISIBLE
                     app.isSelected = true
                     appClickListener.onAppClicked(app)
-                } else if (app.isSelected) {
-                    binding.checkMarkIv.visibility = View.INVISIBLE
+                } else {
+                    itemView.checkMarkIv.visibility = View.GONE
                     app.isSelected = false
                     appClickListener.onAppClicked(app)
                 }

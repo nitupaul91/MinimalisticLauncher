@@ -19,9 +19,9 @@
             android:id="@+id/checkMarkIv"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            visible="@{app.selected}"
             android:layout_margin="24dp"
             android:elevation="4dp"
-            android:visibility="gone"
             android:contentDescription="@string/app_list_item_icon"
             android:src="@drawable/ic_check_circle_black_24dp" />
         <ImageView
