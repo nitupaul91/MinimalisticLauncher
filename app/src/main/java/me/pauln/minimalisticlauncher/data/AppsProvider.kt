@@ -6,9 +6,7 @@ import android.content.pm.PackageManager
 import me.pauln.minimalisticlauncher.MinimalisticLauncherApp
 import me.pauln.minimalisticlauncher.data.model.App
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 class AppsProvider @Inject constructor(
@@ -46,7 +44,6 @@ class AppsProvider @Inject constructor(
                         // add the application info to our collection
                         apps.add(
                             App(
-                                UUID.randomUUID(),
                                 appPackage,
                                 appLabel.toString(),
                                 appIcon,

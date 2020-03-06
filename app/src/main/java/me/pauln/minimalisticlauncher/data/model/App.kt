@@ -2,13 +2,20 @@ package me.pauln.minimalisticlauncher.data.model
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
-import java.util.*
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 
+@Entity
 data class App(
-    val id: UUID,
-    val appPackage: String,
-    val name: String,
-    val icon: Drawable,
-    val launchIntent: Intent?,
+    @PrimaryKey
+    var appPackage: String,
+    var name: String,
+    @Ignore
+    var icon: Drawable?,
+    @Ignore
+    var launchIntent: Intent?,
     var isSelected: Boolean
-)
+) {
+    constructor() : this("", "", null, null, false)
+}

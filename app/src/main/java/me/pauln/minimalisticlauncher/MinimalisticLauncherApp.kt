@@ -2,6 +2,7 @@ package me.pauln.minimalisticlauncher
 
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
+import me.pauln.minimalisticlauncher.data.AppsSelectionDatabase
 import me.pauln.minimalisticlauncher.di.DaggerAppComponent
 import timber.log.Timber
 
