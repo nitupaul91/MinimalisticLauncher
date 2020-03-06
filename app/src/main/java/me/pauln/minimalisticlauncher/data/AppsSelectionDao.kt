@@ -1,6 +1,7 @@
 package me.pauln.minimalisticlauncher.data
 
 import androidx.room.*
+import io.reactivex.Completable
 import io.reactivex.Single
 import me.pauln.minimalisticlauncher.data.model.App
 
@@ -11,11 +12,11 @@ interface AppsSelectionDao {
     fun getApps(): Single<List<App>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun add(app: App)
+    fun saveApps(apps: List<App>): Completable
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(vararg app: App)
+    fun updateApps(apps: List<App>)
 
     @Delete
-    fun remove(vararg app: App)
+    fun remove(app: App)
 }

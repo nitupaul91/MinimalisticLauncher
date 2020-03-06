@@ -22,29 +22,30 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:textStyle="bold"
             android:text="@string/add_apps_description"
             android:textColor="@color/lightGrayThree"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/customiseAppsRv"
             customiseAppList="@{viewModel.apps}"
             android:layout_width="match_parent"
-            android:layout_below="@+id/addAppsDescriptionTv"
             android:layout_height="match_parent"
+            android:layout_below="@+id/addAppsDescriptionTv"
             android:layout_marginTop="16dp" />
 
         <ImageView
             android:id="@+id/addBtn"
             visible="@{viewModel.isAddButtonVisible}"
             android:layout_width="90dp"
-            android:translationZ="4dp"
             android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
             android:background="@drawable/round_button_background"
-            android:src="@drawable/ic_add_white_24dp" />
+            android:onClick="@{()-> viewModel.saveSelectedApps()}"
+            android:src="@drawable/ic_add_white_24dp"
+            android:translationZ="4dp" />
     </RelativeLayout>
 </layout>

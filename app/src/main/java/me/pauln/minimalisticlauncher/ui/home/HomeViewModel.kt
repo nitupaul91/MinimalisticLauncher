@@ -23,12 +23,16 @@ class HomeViewModel @Inject constructor(
 
     private val disposables = CompositeDisposable()
 
+    init {
+        getContent()
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
     }
 
-    fun getContent() {
+    private fun getContent() {
         getTwentyFourHoursClock()
         getUserSelectedApps()
     }
@@ -52,6 +56,11 @@ class HomeViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({ selectedApps ->
+                    for (selectedApp in selectedApps) {
+                        val app = appsRepository.getAppByPackage(selectedApp.appPackage)
+                        selectedApp.icon = app?.icon
+                        selectedApp.launchIntent = app?.launchIntent
+                    }
                     apps.value = selectedApps
                 }, { throwable ->
                     Timber.w(throwable)

@@ -41,8 +41,6 @@ class HomeFragment : DaggerFragment() {
 
         receiver = ClockReceiver()
 
-        viewModel.getContent()
-
         adapter = HomeAppsAdapter(viewModel)
         binding = HomeFragmentBinding.bind(view)
         binding.viewModel = viewModel

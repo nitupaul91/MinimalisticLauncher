@@ -1,6 +1,6 @@
 package me.pauln.minimalisticlauncher.data.repository
 
-import androidx.lifecycle.LiveData
+import io.reactivex.Completable
 import io.reactivex.Single
 import me.pauln.minimalisticlauncher.MinimalisticLauncherApp
 import me.pauln.minimalisticlauncher.data.AppsProvider
@@ -23,11 +23,25 @@ class AppsRepository @Inject constructor(
         appsSelectionDao.getApps()
     }
 
+    override fun getAppByPackage(packageName: String): App? {
+        val apps = getInstalledApps()
+        for (app in apps) {
+            if (app.appPackage == packageName) {
+                return app
+            }
+        }
+        return null
+    }
+
     override fun getInstalledApps(): List<App> {
         return appsProvider.getInstalledApps()
     }
 
     override fun getUserSelectedApps(): Single<List<App>> {
         return appsSelectionDao.getApps()
+    }
+
+    override fun saveApps(apps: List<App>): Completable {
+        return appsSelectionDao.saveApps(apps)
     }
 }
