@@ -2,9 +2,13 @@ package me.pauln.minimalisticlauncher.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import me.pauln.minimalisticlauncher.data.model.App
 import me.pauln.minimalisticlauncher.data.repository.AppsRepository
 import me.pauln.minimalisticlauncher.data.repository.ClockRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
@@ -17,10 +21,20 @@ class HomeViewModel @Inject constructor(
     val currentDate = MutableLiveData<String>()
     val app = MutableLiveData<App>()
 
-    fun getContent() {
+    private val disposables = CompositeDisposable()
+
+    init {
+        getContent()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposables.clear()
+    }
+
+    private fun getContent() {
         getTwentyFourHoursClock()
-        // todo replace with customised apps
-//        getInstalledApps()
+        getUserSelectedApps()
     }
 
     fun getTwentyFourHoursClock() {
@@ -28,20 +42,35 @@ class HomeViewModel @Inject constructor(
         getDate()
     }
 
-    fun getTwelveHoursClock() {
-        currentTime.value = clockRepository.getTwelveHoursClock()
-        getDate()
-    }
-
-    fun getInstalledApps() {
-        apps.value = appsRepository.getInstalledApps()
+    fun openApp(app: App) {
+        this.app.value = app
     }
 
     private fun getDate() {
         currentDate.value = clockRepository.getDate()
     }
 
-    fun openApp(app: App) {
-        this.app.value = app
+    private fun getUserSelectedApps() {
+        disposables.add(
+            appsRepository.getUserSelectedApps()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({ selectedApps ->
+                    for (selectedApp in selectedApps) {
+                        val app = appsRepository.getAppByPackage(selectedApp.appPackage)
+                        selectedApp.icon = app?.icon
+                        selectedApp.launchIntent = app?.launchIntent
+                    }
+                    apps.value = selectedApps
+                }, { throwable ->
+                    Timber.w(throwable)
+                })
+        )
+    }
+
+    @Deprecated("not implemented yet")
+    fun getTwelveHoursClock() {
+        currentTime.value = clockRepository.getTwelveHoursClock()
+        getDate()
     }
 }

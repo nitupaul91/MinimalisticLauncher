@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.customise_apps_fragment.*
 import me.pauln.minimalisticlauncher.R
 import me.pauln.minimalisticlauncher.data.model.App
 import me.pauln.minimalisticlauncher.databinding.CustomiseAppsFragmentBinding
@@ -47,9 +46,11 @@ class CustomiseAppsFragment : DaggerFragment(), CustomiseAppsAdapter.OnAppClickL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        addBtn.setOnClickListener {
-            navigateToHome(view)
-        }
+        viewModel.isAppSelectionFinished.observe(this, Observer {
+            if (it) {
+                navigateToHome(view)
+            }
+        })
     }
 
     override fun onAppClicked(app: App) {

@@ -48,11 +48,11 @@
             android:id="@+id/changeThemeTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_spray_01"
             android:gravity="center"
             android:text="@string/change_theme"
             android:textColor="@color/lightGrayThree"
             android:textSize="22sp"
-            android:drawableStart="@drawable/ic_spray_01"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/phoneSettingsTv"
@@ -62,8 +62,8 @@
             android:id="@+id/customiseHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:drawableStart="@drawable/ic_playlist_add_black_24dp"
+            android:gravity="center"
             android:text="@string/customise_home"
             android:textColor="@color/lightGrayThree"
             android:textSize="22sp"
@@ -89,9 +89,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/appListRv"
             appList="@{viewModel.apps}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateTv" />
 
         <ImageView
             android:id="@+id/phoneIv"

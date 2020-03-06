@@ -6,6 +6,8 @@ import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 import me.pauln.minimalisticlauncher.MinimalisticLauncherApp;
+import me.pauln.minimalisticlauncher.di.modules.AppDatabaseModule;
+import me.pauln.minimalisticlauncher.di.modules.AppsSelectionModule;
 import me.pauln.minimalisticlauncher.di.modules.CustomiseAppsModule;
 import me.pauln.minimalisticlauncher.di.modules.HomeModule;
 
@@ -13,7 +15,10 @@ import me.pauln.minimalisticlauncher.di.modules.HomeModule;
 @Component(modules = {
         AndroidSupportInjectionModule.class,
         HomeModule.class,
-        CustomiseAppsModule.class})
+        CustomiseAppsModule.class,
+        AppDatabaseModule.class,
+        AppsSelectionModule.class
+})
 
 public interface AppComponent extends AndroidInjector<MinimalisticLauncherApp> {
 
